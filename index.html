@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Private IPL match prediction app for an 8-player group."
+    />
+    <meta name="theme-color" content="#07111f" />
+    <title>IPL Prediction App</title>
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./style.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Private 8-player league</p>
+          <h1>IPL Prediction App</h1>
+        </div>
+        <button id="logoutBtn" class="ghost-btn hidden" type="button">Logout</button>
+      </header>
+
+      <main class="main-content">
+        <section id="statusCard" class="status-card">
+          <div>
+            <p class="card-label">Today</p>
+            <h2 id="todayLabel">Loading match...</h2>
+          </div>
+          <div class="status-meta">
+            <span id="playerBadge" class="pill hidden"></span>
+            <span id="cutoffBadge" class="pill accent">Cutoff 7:30 PM IST</span>
+          </div>
+        </section>
+
+        <section id="homeTab" class="tab-panel active">
+          <div class="card hero-card">
+            <p class="card-label">Prediction window</p>
+            <div id="countdownValue" class="countdown">--:--:--</div>
+            <p id="countdownHint" class="muted">
+              Server time is syncing...
+            </p>
+          </div>
+
+          <div class="card match-card">
+            <div id="matchState" class="match-state">Loading today’s match...</div>
+            <div id="matchTeams" class="match-teams hidden">
+              <button id="teamABtn" class="team-btn" type="button"></button>
+              <div class="versus">vs</div>
+              <button id="teamBBtn" class="team-btn" type="button"></button>
+            </div>
+            <div id="selectedState" class="selection-banner hidden"></div>
+            <div id="homeMessage" class="info-box hidden"></div>
+          </div>
+        </section>
+
+        <section id="resultsTab" class="tab-panel">
+          <div class="card">
+            <div class="section-head">
+              <div>
+                <p class="card-label">Today’s final picks</p>
+                <h2 id="resultsHeading">Predictions</h2>
+              </div>
+              <span id="resultsLockState" class="pill">Hidden before cutoff</span>
+            </div>
+            <div id="resultsGuard" class="info-box">
+              Predictions become visible to everyone after 7:30 PM IST.
+            </div>
+            <div id="predictionsList" class="prediction-list hidden"></div>
+          </div>
+
+          <div class="card">
+            <div class="section-head">
+              <div>
+                <p class="card-label">Distribution</p>
+                <h2>Prediction split</h2>
+              </div>
+            </div>
+            <div class="chart-wrap">
+              <canvas id="predictionChart" aria-label="Prediction distribution pie chart"></canvas>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="section-head">
+              <div>
+                <p class="card-label">Settled matches</p>
+                <h2>Result tracker</h2>
+              </div>
+            </div>
+            <div id="resultsSummary" class="stack-list"></div>
+          </div>
+        </section>
+
+        <section id="leaderboardTab" class="tab-panel">
+          <div class="card">
+            <div class="section-head">
+              <div>
+                <p class="card-label">Money table</p>
+                <h2>Leaderboard</h2>
+              </div>
+            </div>
+            <div id="leaderboardList" class="leaderboard-list"></div>
+          </div>
+        </section>
+      </main>
+
+      <nav class="bottom-nav" aria-label="Primary">
+        <button class="nav-btn active" data-tab="homeTab" type="button">Home</button>
+        <button class="nav-btn" data-tab="resultsTab" type="button">Results</button>
+        <button class="nav-btn" data-tab="leaderboardTab" type="button">Leaderboard</button>
+      </nav>
+    </div>
+
+    <div id="loginModal" class="modal-backdrop">
+      <div class="modal-card">
+        <p class="eyebrow">Private access</p>
+        <h2>Enter your name</h2>
+        <p class="muted">
+          Only the 8 registered players can access this app.
+        </p>
+        <form id="loginForm" class="login-form">
+          <label class="input-label" for="nameInput">Player name</label>
+          <input
+            id="nameInput"
+            class="text-input"
+            type="text"
+            autocomplete="name"
+            placeholder="e.g. Ashwin"
+            required
+          />
+          <button class="primary-btn" type="submit">Continue</button>
+          <p id="loginError" class="error-text hidden"></p>
+        </form>
+      </div>
+    </div>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>

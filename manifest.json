@@ -1,0 +1,23 @@
+{
+  "name": "IPL Prediction App",
+  "short_name": "IPL Picks",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#040b14",
+  "theme_color": "#07111f",
+  "description": "Private 8-player IPL prediction web app.",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "./icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

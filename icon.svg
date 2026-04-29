@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0c1f35" />
+      <stop offset="100%" stop-color="#04101c" />
+    </linearGradient>
+    <linearGradient id="accent" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#59f0c2" />
+      <stop offset="100%" stop-color="#2fd8b0" />
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="120" fill="url(#bg)" />
+  <circle cx="256" cy="256" r="164" fill="none" stroke="#18324d" stroke-width="20" />
+  <path d="M220 128h72v88l76 34-30 62-46-22v96h-72v-96l-46 22-30-62 76-34z" fill="url(#accent)" />
+  <text x="256" y="440" fill="#f7fbff" font-size="56" font-family="Segoe UI, Arial, sans-serif" font-weight="700" text-anchor="middle">IPL</text>
+</svg>

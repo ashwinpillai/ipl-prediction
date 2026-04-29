@@ -1,0 +1,83 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isAllowedUserKey(userKey) {
+      return userKey in [
+        "anto",
+        "chetan",
+        "nikhil",
+        "ashwin",
+        "faruk",
+        "ashish",
+        "melvin",
+        "jamal"
+      ];
+    }
+
+    function isAllowedUserName(userName) {
+      return userName in [
+        "Anto",
+        "Chetan",
+        "Nikhil",
+        "Ashwin",
+        "Faruk",
+        "Ashish",
+        "Melvin",
+        "Jamal"
+      ];
+    }
+
+    function matchDoc(matchId) {
+      return get(/databases/$(database)/documents/matches/$(matchId));
+    }
+
+    function isBeforeCutoff(matchId) {
+      return matchDoc(matchId).data != null
+        && matchDoc(matchId).data.cutoffAt is timestamp
+        && request.time < matchDoc(matchId).data.cutoffAt;
+    }
+
+    match /system_clock/{uid} {
+      allow read, write: if isSignedIn() && request.auth.uid == uid;
+    }
+
+    match /matches/{matchId} {
+      allow read: if isSignedIn();
+      allow create: if isSignedIn()
+        && !exists(/databases/$(database)/documents/matches/$(matchId))
+        && request.resource.data.id == matchId
+        && request.resource.data.teamA is string
+        && request.resource.data.teamB is string
+        && request.resource.data.date is string
+        && request.resource.data.cutoffAt is timestamp;
+      allow update, delete: if false;
+    }
+
+    match /predictions/{predictionId} {
+      allow read: if isSignedIn();
+      allow create, update: if isSignedIn()
+        && request.resource.data.matchId is string
+        && request.resource.data.userKey is string
+        && request.resource.data.userName is string
+        && request.resource.data.selectedTeam is string
+        && predictionId == request.resource.data.matchId + "_" + request.resource.data.userKey
+        && isAllowedUserKey(request.resource.data.userKey)
+        && isAllowedUserName(request.resource.data.userName)
+        && isBeforeCutoff(request.resource.data.matchId)
+        && request.resource.data.selectedTeam in [
+          matchDoc(request.resource.data.matchId).data.teamA,
+          matchDoc(request.resource.data.matchId).data.teamB
+        ];
+      allow delete: if false;
+    }
+
+    match /results/{resultId} {
+      allow read: if isSignedIn();
+      allow write: if false;
+    }
+  }
+}
