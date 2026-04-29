@@ -1,4 +1,4 @@
-const firebaseConfig = {
+export const FIREBASE_CONFIG = {
   apiKey: "AIzaSyAzw-1GkzTCExw0wAiIl63AjO08GAfyRgE",
   authDomain: "ipl-prediction-7d57d.firebaseapp.com",
   projectId: "ipl-prediction-7d57d",
